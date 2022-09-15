@@ -5,7 +5,7 @@ include('connect.php');
 //Check if body is all received, if not return an error
 if(isset($_POST['user']) && isset($_POST['pass'])) {
     $user = $_POST['user'];
-    $pass = $_POST['pass'];
+    $pass = hash("sha256", $_POST["pass"]);
 } else {
     $response = [];
     $response["success"] = false;

@@ -16,6 +16,7 @@ async function signup(user, pass, email, pnumber = "") {
             body: body
         });
         const data = await response.json()
+        //return the response
         return data;
     } catch (error) {
         console.log(error)
