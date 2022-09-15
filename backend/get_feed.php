@@ -10,7 +10,7 @@ else{
     $response["success"] = false;
     $response["message"] = "missing post elements";
     echo json_encode($response);
-    //exit();
+    exit();
 }
 
 //Getting user ID
