@@ -36,7 +36,7 @@ while($a = $results->fetch_assoc()){
 if($reply){
     $response = [];
     $response["success"] = false;
-    $response["message"] = "User or email already exists!";
+    $response["message"] = "user or email already exists";
     echo json_encode($response);
     exit();
 }
@@ -48,6 +48,7 @@ $query->execute();
 
 $response = [];
 $response["success"] = true;
+$response["message"] = "user created succesfully";
 
 echo json_encode($response);
 
