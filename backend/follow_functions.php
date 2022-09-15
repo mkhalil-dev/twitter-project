@@ -16,9 +16,10 @@ else{
 }
 
 //Check if both user1 and user 2 are set in Post
-if(isset($_POST['user']) && isset($_POST['userfollow'])){
-    $user = $_POST['user'];
-    $userfollow = $_POST['userfollow'];
+if(isset($_POST['user1']) && isset($_POST['user2'])){
+    $user = [];
+    $user[0] = $_POST['user1'];
+    $user[1] = $_POST['user2'];
 }
 else{
     $response = [
@@ -29,14 +30,34 @@ else{
     exit();
 }
 
+//Getting user ID Looping over both username
+$userid = [];
+for ($x = 0; $x <= 1; $x++) {  
+    $getuser = $mysqli->prepare("SELECT id FROM users WHERE user='$user[$x]'");
+    $getuser->execute();
+    $userid[$x] = $getuser->get_result()->fetch_assoc();
+}
+
+//Checking if both user exists
+if(!$userid[0] || !$userid[1]){
+    $response = [];
+    $response["success"] = false;
+    $response["message"] = "user not found";
+    echo json_encode($response);
+    exit();
+}
+    
+echo json_encode($userid);
+
 //follow and unfollow function depending on the type of operation
+/*
 function follow(){
     
 }
 
 function unfollow(){
-
+    
 }
-
+*/
 
 ?>
