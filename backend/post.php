@@ -27,10 +27,24 @@ else{
     exit();
 }
 
+//Getting user ID
+$getuser = $mysqli->prepare("SELECT id FROM users WHERE user='$user'");
+$getuser->execute();
+$userid = $getuser->get_result()->fetch_assoc();
+
+//Checking if user exists
+if(!$userid){
+    $response = [];
+    $response["success"] = false;
+    $response["message"] = "user not found";
+    echo json_encode($response);
+    exit();
+}
+
 //Creating the post
 ini_set('display_errors', 1);
 $query = $mysqli->prepare("INSERT INTO `posts` (`id`, `content`, `media_url`, `created_at`, `user_id`) VALUES (NULL, ?, ?, NULL, ?);");
-$query->bind_param("sss", $content, $media, $user);
+$query->bind_param("sss", $content, $media, $userid['id']);
 $query->execute();
 
 //Returning a response
