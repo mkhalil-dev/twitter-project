@@ -47,17 +47,35 @@ if(!$userid[0] || !$userid[1]){
     echo json_encode($response);
     exit();
 }
+
+$user1 = $userid[0]['id'];
+$user2 = $userid[1]['id'];
     
 //follow and unfollow function depending on the type of operation
 if($op == 'follow'){
+    //VERIFICATION IF ALREADY FOLLOWED
+    $userverf = $mysqli->prepare("SELECT user_id FROM followers WHERE user_id='$user1' AND followed='$user2';");
+    $userverf->execute();
+    $result = $userverf->get_result()->fetch_assoc();
+
+    //If already followed
+    if($result){
+        $response = [
+            "success" => true,
+            "message" => "user already followed"
+        ];
+        echo json_encode($response);
+        exit();  
+    }
+
+    //setting the follow record
     $query = $mysqli->prepare("INSERT INTO `followers` (`user_id`, `followed`) VALUES (?, ?);");
-    $query->bind_param("ss", $userid[0]['id'], $userid[1]['id']);
+    $query->bind_param("ss", $user1, $user2);
     $query->execute();
     $response = [
         "success" => true
     ];
     echo json_encode($response);
-    //SET VERIFICATION IF ALREADY FOLLOWED
 }
 
 ?>
