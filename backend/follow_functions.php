@@ -3,8 +3,8 @@
 include('connect.php');
 
 //GET OPERATION
-if(isset($_GET['op'])){
-    $op = $_GET['op'];
+if(isset($_POST['op'])){
+    $op = $_POST['op'];
 }
 else{
     $response = [
@@ -40,24 +40,24 @@ for ($x = 0; $x <= 1; $x++) {
 
 //Checking if both user exists
 if(!$userid[0] || !$userid[1]){
-    $response = [];
-    $response["success"] = false;
-    $response["message"] = "user not found";
+    $response = [
+        "success" => false,
+        "message" => "user not found"
+    ];
     echo json_encode($response);
     exit();
 }
     
-echo json_encode($userid);
-
 //follow and unfollow function depending on the type of operation
-/*
-function follow(){
-    
+if($op == 'follow'){
+    $query = $mysqli->prepare("INSERT INTO `followers` (`user_id`, `followed`) VALUES (?, ?);");
+    $query->bind_param("ss", $userid[0]['id'], $userid[1]['id']);
+    $query->execute();
+    $response = [
+        "success" => true
+    ];
+    echo json_encode($response);
+    //SET VERIFICATION IF ALREADY FOLLOWED
 }
-
-function unfollow(){
-    
-}
-*/
 
 ?>
