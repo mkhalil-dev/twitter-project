@@ -45,9 +45,9 @@ $getuser->execute();
 $userid = $getuser->get_result()->fetch_assoc()['id'];
 
 //Validating post ID
-$getuser = $mysqli->prepare("SELECT id FROM posts WHERE id='$post'");
-$getuser->execute();
-$postid = $getuser->get_result()->fetch_assoc();
+$getpost = $mysqli->prepare("SELECT id FROM posts WHERE id='$post'");
+$getpost->execute();
+$postid = $getpost->get_result()->fetch_assoc();
 
 //Checking if user and post exists
 if(!$userid || !$postid){
