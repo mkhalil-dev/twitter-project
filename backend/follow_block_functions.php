@@ -73,19 +73,19 @@ if(!$userid[0] || !$userid[1]){
 $user1 = $userid[0]['id'];
 $user2 = $userid[1]['id'];
     
-//VERIFICATION IF ALREADY FOLLOWED / UNFOLLOWED
-$userverf = $mysqli->prepare("SELECT user_id FROM `$db` WHERE user_id='$user1' AND user_id2='$user2';");
+//VERIFICATION IF ALREADY FOLLOWED / UNFOLLOWED / BLOCKED / UNBLOCKED
+$userverf = $mysqli->prepare("SELECT * FROM `$db` WHERE user_id='$user1' AND user_id2='$user2';");
 $userverf->execute();
 $result = $userverf->get_result()->fetch_assoc();
 
-//IF ALREADY FOLLOWED / UNFOLLOWED
-if(($result && $op == 'follow') || (!$result && $op == 'unfollow')){
+//IF ALREADY FOLLOWED / UNFOLLOWED / BLOCKED / UNBLOCKED
+if(($result && $op == 'follow') || (!$result && $op == 'unfollow') || ($result && $op == 'block') || (!$result && $op == 'unblock')){
     $response = [
         "success" => true,
         "message" => 'nothing has been done'
     ];
     echo json_encode($response);
-    exit();  
+    exit();
 }
 
 //Setting the follow record
@@ -102,7 +102,7 @@ if($op == 'follow' || $op == 'block'){
     ];
     echo json_encode($response);
 }
-//Remove Unfollowed Record
+//Remove follow Record
 else if($op == 'unfollow' || $op == 'unblock'){
     $query = $mysqli->prepare("DELETE FROM `$db` WHERE user_id='$user1' AND user_id2 ='$user2'");
     $query->execute();
