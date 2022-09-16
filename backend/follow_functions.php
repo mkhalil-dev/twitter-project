@@ -78,4 +78,29 @@ if($op == 'follow'){
     echo json_encode($response);
 }
 
+if($op == 'unfollow'){
+    //VERIFICATION IF ALREADY UNFOLLOWED
+    $userverf = $mysqli->prepare("SELECT user_id FROM followers WHERE user_id='$user1' AND followed='$user2';");
+    $userverf->execute();
+    $result = $userverf->get_result()->fetch_assoc();
+
+    //If already unfollowed
+    if(!$result){
+        $response = [
+            "success" => true,
+            "message" => "user already unfollowed"
+        ];
+        echo json_encode($response);
+        exit();  
+    }
+
+    //deleting the follow record
+    $query = $mysqli->prepare("DELETE FROM followers WHERE user_id='$user1' AND followed ='$user2'");
+    $query->execute();
+    $response = [
+        "success" => true
+    ];
+    echo json_encode($response);
+}
+
 ?>
