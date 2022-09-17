@@ -1,8 +1,8 @@
 <?php
 
 include('connect.php');
-if(isset($_POST['user'])){
-    $user = $_POST['user'];
+if(isset($_GET['user'])){
+    $user = $_GET['user'];
 }
 else{
     $response = [];
@@ -12,7 +12,7 @@ else{
     exit();
 }
 
-$query = $mysqli->prepare('SELECT * FROM users WHERE user = "$user"');
+$query = $mysqli->prepare("SELECT * FROM users WHERE user = '$user'");
 $query->execute();
 $result = $query->get_result()->fetch_assoc();
 

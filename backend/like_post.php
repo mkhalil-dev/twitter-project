@@ -53,7 +53,7 @@ $postid = $getpost->get_result()->fetch_assoc();
 if(!$userid || !$postid){
     $response = [
         "success" => false,
-        "message" => "user not found"
+        "message" => "user or post not found"
     ];
     echo json_encode($response);
     exit();

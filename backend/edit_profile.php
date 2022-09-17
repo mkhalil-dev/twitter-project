@@ -3,7 +3,6 @@
 include('connect.php');
 ini_set('display_errors', 1);
 
-//Check if username is sent, if not then exit
 if(isset($_POST['user'])){
     $user = $_POST['user'];
 }
@@ -15,7 +14,6 @@ else{
     exit();
 }
 
-//Check if required edits are sent
 if(isset($_POST['pnumber']) || isset($_POST['fname']) || isset($_POST['lname']) || isset($_POST['bday']) || isset($_POST['country'])){
     if(isset($_POST['pnumber'])){
         $pnumber = $_POST['pnumber'];
@@ -63,7 +61,6 @@ if(isset($_POST['pnumber']) || isset($_POST['fname']) || isset($_POST['lname']) 
         $country = NULL;
     }
 }
-//If none were sent Exit
 else{
     $response = [];
     $response["success"] = false;

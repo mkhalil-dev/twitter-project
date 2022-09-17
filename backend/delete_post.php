@@ -24,7 +24,7 @@ $getuser->execute();
 $userid = $getuser->get_result()->fetch_assoc()['id'];
 
 //Validating post ID
-$getpost = $mysqli->prepare("SELECT id FROM posts WHERE id='$post' AND user_id='$userid'");
+$getpost = $mysqli->prepare("SELECT id FROM posts WHERE id=? AND user_id=?");
 $getpost->bind_param('ss', $post, $userid);
 $getpost->execute();
 $postid = $getpost->get_result()->fetch_assoc()['id'];

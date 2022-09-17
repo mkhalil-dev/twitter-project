@@ -55,7 +55,8 @@ else{
 //Getting user ID, Looping over both username
 $userid = [];
 for ($x = 0; $x <= 1; $x++) {  
-    $getuser = $mysqli->prepare("SELECT id FROM users WHERE user='$user[$x]'");
+    $getuser = $mysqli->prepare("SELECT id FROM users WHERE user=?");
+    $getuser->bind_param('s', $user[$x]);
     $getuser->execute();
     $userid[$x] = $getuser->get_result()->fetch_assoc();
 }
@@ -74,7 +75,8 @@ $user1 = $userid[0]['id'];
 $user2 = $userid[1]['id'];
     
 //VERIFICATION IF ALREADY FOLLOWED / UNFOLLOWED / BLOCKED / UNBLOCKED
-$userverf = $mysqli->prepare("SELECT * FROM `$db` WHERE user_id='$user1' AND user_id2='$user2';");
+$userverf = $mysqli->prepare("SELECT * FROM `$db` WHERE user_id=? AND user_id2=?");
+$userverf->bind_param('ss', $user1, $user2);
 $userverf->execute();
 $result = $userverf->get_result()->fetch_assoc();
 
@@ -88,7 +90,7 @@ if(($result && $op == 'follow') || (!$result && $op == 'unfollow') || ($result &
     exit();
 }
 
-//Setting the follow record
+//Setting the follow/block record
 if($op == 'follow' || $op == 'block'){
     $query = $mysqli->prepare("INSERT INTO `$db` (`user_id`, `user_id2`) VALUES (?, ?);");
     $query->bind_param("ss", $user1, $user2);
@@ -102,9 +104,10 @@ if($op == 'follow' || $op == 'block'){
     ];
     echo json_encode($response);
 }
-//Remove follow Record
+//Remove follow/block Record
 else if($op == 'unfollow' || $op == 'unblock'){
-    $query = $mysqli->prepare("DELETE FROM `$db` WHERE user_id='$user1' AND user_id2 ='$user2'");
+    $query = $mysqli->prepare("DELETE FROM `$db` WHERE user_id=? AND user_id2=?");
+    $query->bind_param("ss", $user1, $user2);
     $query->execute();
     $response = [
         "success" => true
