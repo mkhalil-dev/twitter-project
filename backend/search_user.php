@@ -13,6 +13,7 @@ else{
     exit();
 }
 
+//Searching all users with a username/first name/last name that matches our request
 $query = $mysqli->prepare('SELECT user FROM users WHERE user like "%'.$search.'%" OR fname like "%'.$search.'%" OR lname like "%'.$search.'%"');
 $query->execute();
 $result = $query->get_result();
