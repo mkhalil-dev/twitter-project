@@ -18,13 +18,15 @@ else{
 }
 
 //Get the user id
-$getuser = $mysqli->prepare("SELECT id FROM users WHERE user='$user'");
+$getuser = $mysqli->prepare("SELECT id FROM users WHERE user=?");
+$getuser->bind_param('s', $user);
 $getuser->execute();
 $userid = $getuser->get_result()->fetch_assoc()['id'];
 
 //Validating post ID
 $getpost = $mysqli->prepare("SELECT id FROM posts WHERE id='$post' AND user_id='$userid'");
-$getpost ->execute();
+$getpost->bind_param('ss', $post, $userid);
+$getpost->execute();
 $postid = $getpost->get_result()->fetch_assoc()['id'];
 
 //Checking if user and post exists
@@ -38,7 +40,8 @@ if(!$userid || !$postid){
 }
 
 //Delete the requested post
-$query = $mysqli->prepare("DELETE FROM `posts` WHERE id='$post' AND user_id ='$userid'");
+$query = $mysqli->prepare("DELETE FROM `posts` WHERE id=? AND user_id=?");
+$query->bind_param('ss', $post, $userid);
 $query->execute();
 $response = [
     "success" => true

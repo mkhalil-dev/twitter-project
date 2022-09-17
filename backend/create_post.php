@@ -28,7 +28,8 @@ else{
 }
 
 //Getting user ID
-$getuser = $mysqli->prepare("SELECT id FROM users WHERE user='$user'");
+$getuser = $mysqli->prepare("SELECT id FROM users WHERE user=?");
+$getuser->bind_param('s', $user);
 $getuser->execute();
 $userid = $getuser->get_result()->fetch_assoc();
 
