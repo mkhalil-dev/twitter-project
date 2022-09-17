@@ -24,7 +24,8 @@ else{
 }
 
 //Checking if username or email exists in the backend
-$query = $mysqli->prepare("SELECT user FROM users WHERE user='$user' OR email='$email'");
+$query = $mysqli->prepare("SELECT user FROM users WHERE user=? OR email=?");
+$query->bind_param('ss', $user, $email);
 $query->execute();
 $results = $query->get_result();
 
