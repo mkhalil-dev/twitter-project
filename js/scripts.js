@@ -17,7 +17,8 @@ function signinbtn(event){
     sign_in.removeEventListener("click", signinbtn)
     event.stopPropagation();
     let resetbtn = (e) => {
-        if(e.isTrusted || e.key == "Escape"){
+        console.log(e)
+        if(e.type == "click" || e.key == "Escape"){
             bagrcol.classList.remove("back")
             in_pop.classList.remove("pop")
             sign_in.addEventListener("click", signinbtn)
@@ -55,7 +56,7 @@ function signupbtn(event){
     sign_in.removeEventListener("click", signinbtn)
     event.stopPropagation();
     let resetbtn = (e) => {
-        if(e.isTrusted || e.key == "Escape"){
+        if(e.type == "click"  || e.key == "Escape"){
             bagrcol.classList.remove("back")
             up_pop.classList.remove("pop")
             sign_in.addEventListener("click", signinbtn)
@@ -68,10 +69,6 @@ function signupbtn(event){
     popup_esc.addEventListener("click", resetbtn)
     window.addEventListener('keydown', resetbtn)
     document.getElementById("main").addEventListener('click', resetbtn)
-      
-      $('#menucontainer').click(function(event){
-        event.stopPropagation();
-      });
     //Signing up
     document.getElementById("signup").addEventListener('click', function(){
         let username = document.getElementById("signup-username").value;
@@ -90,4 +87,52 @@ function signupbtn(event){
             })
         })();
     })
+}
+
+//Sign up API call
+async function signup(user, pass, email, pnumber = "") {
+    try {
+        //Creating the FormData to Post
+        const body = new FormData()
+        if(user && pass && email){
+        body.set('user', user)
+        body.set('pass', pass)
+        body.set('email', email)
+        }
+        if(pnumber) {
+        body.set('pnumber', pnumber)
+        }
+        //Posting
+        const response = await fetch('http://localhost/fsw/twitter-project-apis/signup.php', {
+            method: 'POST',
+            body: body
+        });
+        const data = await response.json()
+        //return the response
+        return data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//Sign In API Calls
+async function signin(user, pass) {
+    try {
+        //Creating the FormData to Post
+        const body = new FormData()
+        if(user && pass){
+            body.set('user', user)
+            body.set('pass', pass)
+        }
+        
+        //Posting
+        const response = await fetch('http://localhost/fsw/twitter-project-apis/signin.php', {
+            method: 'POST',
+            body: body
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        return error;
+    }
 }
