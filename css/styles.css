@@ -66,6 +66,9 @@
   height: 3vw;
   margin-top: -4vw;
   margin-left: 65%;
+  background-color: black;
+  border: 1px solid rgb(83, 100, 113);
+  color: white;
 }
 .name {
   margin-top: 2vw;
@@ -120,7 +123,9 @@
   border: none;
   outline: none;
   background-color: black;
+  padding-bottom: 3vw;
   color: white;
+  margin-bottom: 1vw;
 }
 .medbt {
   width: 10vw;
@@ -130,6 +135,11 @@
   outline: none;
   background-color: black;
   color: white;
+  padding-bottom: 3vw;
+  margin-bottom: 1vw;
+
+
+  
 }
 .medbt:focus {
   border-bottom: 4px solid  #1d9bf0;
@@ -139,6 +149,7 @@
   border-bottom: 4px solid  #1d9bf0;
   
 }
+
 
 .main-container {
   display: flex;
@@ -459,6 +470,26 @@ h4 {
   .colum1 .nav p {
     display: none;
   }
+  .joindate{
+    margin-left: 3vw;
+    margin-top: -1.3vw;
+  }
+  .stprf{
+    font-size: 1vw;
+    width: 20%;
+  }
+  .Following{
+    margin-left: 3.3vw;
+    margin-top: -2.2vw;
+  }
+.nbflng{
+  margin-left: 10vw;
+  margin-top: -2.1vw;
+}
+.Followers{
+  margin-left: 12vw;
+  margin-top: -2.2vw;
+}
 
   .colum1 .nav {
     margin-left: 30%;
@@ -550,10 +581,100 @@ h4 {
   .colum1 .fa-user {
     margin-left: 26%;
   }
+  .fa-calendar{
+    margin-top: 4vw;
+  }
+  .nav1 p{
+    font-size: 4vw;
+  }
+  .name{
+    font-size: 3vw;
+  }
+  .backimg img{
+    height: 30vw;
+  }
+  .joindate{
+    font-size: 2vw;
+    margin-left: 3.8vw;
+    margin-top: -2.2vw;
+  }
+ 
+  .Following{
+    font-size: 2vw;
+
+    margin-left: 5.4vw;
+    margin-top: -4vw;
+  }
+  .nbfler{
+    font-size: 2vw;
+
+    margin-top: 6vw;
+  }
+.nbflng{
+  font-size: 2vw;
+
+  margin-left: 17vw;
+  margin-top: -5.6vw;
+}
+.Followers{
+  font-size: 2vw;
+
+  margin-left: 21vw;
+  margin-top: -3.6vw;
+  margin-bottom: 3vw;
+}
 }
 @media screen and (max-width: 490px) {
   .colum1 {
     display: none;
+  }
+  .stprf{
+    width: 30vw;
+    font-size: 3vw;
+    height: 6vw;
+  }
+  .backimg img{
+    height: 30vw;
+  }
+  .prof{
+    margin-top: -7vw;
+    width: 20vw;
+    height: 20vw;
+  }
+  .nav1 p{
+    font-size: 5vw;
+  }
+  .name{
+    font-size: 4vw;
+  }
+  .username{
+    font-size: 3vw;
+  }
+  .joindate{
+    font-size: 3vw;
+    margin-top: -3.4vw;
+    margin-left:6%;
+  }
+  .nbfler{
+    font-size: 3vw;
+    margin-top: 5vw;
+  }
+  .Following{
+    font-size: 3vw;
+    margin-top: -5.1vw;
+    margin-left: 5vw;
+  }
+  .nbflng{
+    font-size: 3vw;
+    margin-top: -6.8  vw;
+    margin-left: 22vw;
+
+  }
+  .Followers{
+    font-size: 3vw;
+    margin-top: -5.2vw;
+    margin-left: 28vw;
+
   }
   .colum3 {
     display: none;
