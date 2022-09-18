@@ -31,9 +31,16 @@
 }
 
 
+#tweetbox{
+  color: #fafafa;
+  font-weight: 400;
+  font-size: 14px;
+}
 
-
-
+input{
+  border: 0vmax;
+  padding: 10px;
+}
 
 
 
@@ -166,7 +173,8 @@ body {
 button {
   width: 60%;
   height: 50px;
-
+  border: 0;
+  cursor: pointer;
   border-radius: 30px;
 }
 
@@ -215,6 +223,7 @@ p {
   height: 100%;
   background-image: url(../images/twitter.png);
   background-repeat: no-repeat;
+  background-size: cover;
   background-position: center;
 }
 

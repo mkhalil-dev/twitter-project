@@ -8,6 +8,7 @@ const popin_esc=document.querySelector("#escc")
 
 // EVENT LISTNERS FOR SIGN IN / SIGN UP BUTTONS
 
+loginpage()
 function loginpage(){
     sign_in.addEventListener("click", signinbtn)
     sign_up.addEventListener("click", signupbtn)
@@ -141,11 +142,12 @@ function loginpage(){
 }
 
 
-
-image_input.addEventListener("change", function() {
-  const reader = new FileReader();
-  reader.addEventListener("load", (evt) => {
-    console.log(evt.target.result);
-  });
-  reader.readAsDataURL(this.files[0]);
-});
+function hompage() {
+    image_input.addEventListener("change", function() {
+        const reader = new FileReader();
+        reader.addEventListener("load", (evt) => {
+          console.log(evt.target.result);
+        });
+        reader.readAsDataURL(this.files[0]);
+      });
+}
