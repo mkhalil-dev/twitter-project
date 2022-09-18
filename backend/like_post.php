@@ -60,7 +60,8 @@ if(!$userid || !$postid){
 }
     
 //VERIFICATION IF ALREADY LIKED / UNLIKED 
-$userverf = $mysqli->prepare("SELECT * FROM `likes` WHERE user_id='$userid' AND post_id='$post';");
+$userverf = $mysqli->prepare("SELECT * FROM `likes` WHERE user_id=? AND post_id=?;");
+$userverf->bind_param('ss', $userid, $post);
 $userverf->execute();
 $result = $userverf->get_result()->fetch_assoc();
 
@@ -86,7 +87,8 @@ if($op == 'like'){
 }
 //Remove liked Record
 else if($op == 'unlike'){
-    $query = $mysqli->prepare("DELETE FROM `likes` WHERE user_id='$userid' AND post_id ='$post'");
+    $query = $mysqli->prepare("DELETE FROM `likes` WHERE user_id=? AND post_id=?");
+    $query->bind_param('ss', $userid, $post);
     $query->execute();
     $response = [
         "success" => true
