@@ -1,19 +1,17 @@
-
-
+homepage()
 // EVENT LISTNERS FOR SIGN IN / SIGN UP BUTTONS
-
-function loginpage(){
-    const sign_up=document.querySelector("#sign-up")
-    const bagrcol=document.querySelector(".main-page")
-    const sign_in=document.querySelector("#sign-in")
-    const up_pop=document.querySelector("#up-pop")
-    const popup_esc=document.querySelector("#essc")
-    const in_pop=document.querySelector("#in-pop")
-    const popin_esc=document.querySelector("#escc")
+function loginpage() {
+    const sign_up = document.querySelector("#sign-up")
+    const bagrcol = document.querySelector(".main-page")
+    const sign_in = document.querySelector("#sign-in")
+    const up_pop = document.querySelector("#up-pop")
+    const popup_esc = document.querySelector("#essc")
+    const in_pop = document.querySelector("#in-pop")
+    const popin_esc = document.querySelector("#escc")
     sign_in.addEventListener("click", signinbtn)
     sign_up.addEventListener("click", signupbtn)
 
-    function signinbtn(event){
+    function signinbtn(event) {
         bagrcol.classList.add("back")
         in_pop.classList.add("pop")
         sign_up.removeEventListener("click", signupbtn)
@@ -21,7 +19,7 @@ function loginpage(){
         event.stopPropagation();
         let resetbtn = (e) => {
             console.log(e)
-            if(e.type == "click" || e.key == "Escape"){
+            if (e.type == "click" || e.key == "Escape") {
                 bagrcol.classList.remove("back")
                 in_pop.classList.remove("pop")
                 sign_in.addEventListener("click", signinbtn)
@@ -34,32 +32,31 @@ function loginpage(){
         window.addEventListener('keydown', resetbtn)
         document.getElementById("main").addEventListener('click', resetbtn)
         //Checking if user/pass are correct for sign in and getting input value
-        document.getElementById("login").addEventListener('click', function(){
+        document.getElementById("login").addEventListener('click', function() {
             let username = document.getElementById("user").value;
             let password = document.getElementById("pass").value;
-            (async() => {
+            (async () => {
                 await signin(username, password)
-                .then(results => {
-                    if(results["success"]){
-                        console.log("hi")
-                        localStorage.setItem("username", "houssam619");
-                    }
-                    else{
-                        console.log("what")
-                    }
-                })
+                    .then(results => {
+                        if (results["success"]) {
+                            console.log("hi")
+                            localStorage.setItem("username", "houssam619");
+                        } else {
+                            console.log("what")
+                        }
+                    })
             })();
         })
     }
 
-    function signupbtn(event){
+    function signupbtn(event) {
         bagrcol.classList.add("back")
         up_pop.classList.add("pop")
         sign_up.removeEventListener("click", signupbtn)
         sign_in.removeEventListener("click", signinbtn)
         event.stopPropagation();
         let resetbtn = (e) => {
-            if(e.type == "click"  || e.key == "Escape"){
+            if (e.type == "click" || e.key == "Escape") {
                 bagrcol.classList.remove("back")
                 up_pop.classList.remove("pop")
                 sign_in.addEventListener("click", signinbtn)
@@ -73,37 +70,35 @@ function loginpage(){
         window.addEventListener('keydown', resetbtn)
         document.getElementById("main").addEventListener('click', resetbtn)
         //Signing up
-        document.getElementById("signup").addEventListener('click', function(){
+        document.getElementById("signup").addEventListener('click', function() {
             let username = document.getElementById("signup-username").value;
             let email = document.getElementById("signup-email").value;
             let password = document.getElementById("signup-password").value;
-            (async() => {
+            (async () => {
                 await signup(username, password, email)
-                .then(results => {
-                    if(results["success"]){
-                        console.log("created your username")
-                        localStorage.setItem("username", "houssam619");
-                    }
-                    else{
-                        console.log("what")
-                    }
-                })
+                    .then(results => {
+                        if (results["success"]) {
+                            console.log("created your username")
+                            localStorage.setItem("username", "houssam619");
+                        } else {
+                            console.log("what")
+                        }
+                    })
             })();
         })
     }
-
     //Sign up API call
     async function signup(user, pass, email, pnumber = "") {
         try {
             //Creating the FormData to Post
             const body = new FormData()
-            if(user && pass && email){
-            body.set('user', user)
-            body.set('pass', pass)
-            body.set('email', email)
+            if (user && pass && email) {
+                body.set('user', user)
+                body.set('pass', pass)
+                body.set('email', email)
             }
-            if(pnumber) {
-            body.set('pnumber', pnumber)
+            if (pnumber) {
+                body.set('pnumber', pnumber)
             }
             //Posting
             const response = await fetch('http://localhost/fsw/twitter-project-apis/signup.php', {
@@ -123,11 +118,11 @@ function loginpage(){
         try {
             //Creating the FormData to Post
             const body = new FormData()
-            if(user && pass){
+            if (user && pass) {
                 body.set('user', user)
                 body.set('pass', pass)
             }
-            
+
             //Posting
             const response = await fetch('http://localhost/fsw/twitter-project-apis/signin.php', {
                 method: 'POST',
@@ -140,27 +135,27 @@ function loginpage(){
         }
     }
 }
-
-hompage()
-function hompage() {
+function homepage() {
+    const column = document.querySelector(".colum2");
+    console.log(column)
     let user = localStorage.getItem("username");
     getfeed()
     let media;
     document.getElementById("file-input").addEventListener("change", function() {
         const reader = new FileReader();
         reader.addEventListener("load", (evt) => {
-             media = evt.target.result
+            media = evt.target.result
         });
         reader.readAsDataURL(this.files[0]);
     });
     document.getElementById("tweet-btn").addEventListener('click', post)
-    async function post(){
+    async function post() {
         let content = document.getElementById("tweetbox").value;
         const body = new FormData();
-        if(content){
+        if (content) {
             body.set('content', content)
         }
-        if(media){
+        if (media) {
             body.set('media_url', media)
         }
         body.set('user', user)
@@ -169,17 +164,18 @@ function hompage() {
             body: body
         })
         const data = await response.json()
-        console.log( await data)
+            .then(function() {
+                console.log(data);
+            })
         return data;
     }
     async function getfeed() {
         try {
             //Creating the FormData to Post
             const body = new FormData()
-            if(user){
-            body.set('user', user)
-            }
-            else{
+            if (user) {
+                body.set('user', user)
+            } else {
                 return "user is undefined";
             }
             //Posting
@@ -188,7 +184,22 @@ function hompage() {
                 body: body
             });
             const data = await response.json()
-            console.log(data)
+            data.forEach(item => {
+                console.log(item)
+                if(!item.fname){
+                    item.fname = item.user
+                }
+                if(!item.lname){
+                    item.lname = ""
+                }
+                if(!item.likes){
+                    item.likes = 0;
+                }
+                time = item.created_at
+                let odp = time.split(" ");
+                console.log(odp[1])
+                column.insertAdjacentHTML('beforeend', '<div class="Tweet"><div class="tweetpr"><P>'+item.fname+' '+item.lname+'  <SPan>@'+item.user+'  17h</SPan></P></div><P>'+item.content+'</P><img src="./images/twitter.png" alt="" class="twtmed"><i class="fa fa-heart" ></i><p class="nblik">'+item.likes+'</p></div>')
+            });
             //return the response
             return data; //returns an array of data
         } catch (error) {
@@ -197,8 +208,3 @@ function hompage() {
     }
 
 }
-
-function profilepage() {
-
-}
-

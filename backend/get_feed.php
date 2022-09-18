@@ -33,14 +33,14 @@ if(!$userid){
 }
 
 //Getting follower list
-$feed = "user_id='$userid'";
+$feed = "P.user_id='$userid'";
 $follow_list = $mysqli->prepare("SELECT user_id2 FROM followers WHERE user_id='$userid'");
 $follow_list->execute();
 $result = $follow_list->get_result();
 while($a = $result->fetch_assoc()){
     $id = $a['user_id2'];
     $following[] = $a['user_id2'];
-    $feed .= " OR user_id='$id'";
+    $feed .= " OR P.user_id='$id'";
 }
 
 if(isset($following)){
@@ -52,14 +52,14 @@ if(isset($following)){
 }
 
 if(!isset($feed)){
-    $feed = "user_id";
+    $feed = "P.user_id";
 }
 if(!isset($seen)){
     $seen = "('d')";
 }
 
 //Get posts of people you followed
-$query = $mysqli->prepare("SELECT SUBQUERY.* from (SELECT * FROM posts WHERE $feed) AS SUBQUERY WHERE id NOT IN $seen");
+$query = $mysqli->prepare("SELECT DISTINCT SUBQUERY.*, likes from (SELECT P.*,U.fname,U.lname,U.user,U.profile_pic FROM posts P, users U WHERE U.id = P.user_id AND ($feed) AND P.id NOT IN $seen) AS SUBQUERY LEFT JOIN (SELECT likes.post_id, count(likes.post_id) as likes from likes GROUP BY likes.post_id) AS likes ON likes.post_id = SUBQUERY.id");
 $query->execute();
 $results = $query->get_result();
 while($a = $results->fetch_assoc()){
