@@ -26,7 +26,18 @@
   width: 33%;
   height: auto;
   border-left: 1px solid gray;
+
 }
+
+
+
+
+
+
+
+
+
+
 
 .main-container {
   display: flex;
@@ -351,11 +362,18 @@ h4 {
     .colum1 .nav p{
       display: none;
     }
+  
+   
     .colum1 .nav{
       margin-left: 30%;
     }
     .colum1 .fa-home{
-      margin-left: 11%;
+      margin-left: 22%;
+    }
+    .colum1 .fa-user{
+      
+      margin-left: 26%
+
     }
 
     .colum1 .logo{
@@ -432,6 +450,14 @@ h4 {
     margin-left: 40%;
     width: 5vw;
     font-size: 1vw;
+  }
+  .colum1 .fa-home{
+    margin-left: 18%;
+  }
+  .colum1 .fa-user{
+    
+    margin-left: 26%
+
   }
 
 
