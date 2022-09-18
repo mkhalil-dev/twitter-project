@@ -55,7 +55,7 @@ if(!isset($feed)){
     $feed = "user_id";
 }
 if(!isset($seen)){
-    $seen = "id";
+    $seen = "('d')";
 }
 
 //Get posts of people you followed

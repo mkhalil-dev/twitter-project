@@ -1,15 +1,15 @@
-const sign_up=document.querySelector("#sign-up")
-const bagrcol=document.querySelector(".main-page")
-const sign_in=document.querySelector("#sign-in")
-const up_pop=document.querySelector("#up-pop")
-const popup_esc=document.querySelector("#essc")
-const in_pop=document.querySelector("#in-pop")
-const popin_esc=document.querySelector("#escc")
+
 
 // EVENT LISTNERS FOR SIGN IN / SIGN UP BUTTONS
 
-loginpage()
 function loginpage(){
+    const sign_up=document.querySelector("#sign-up")
+    const bagrcol=document.querySelector(".main-page")
+    const sign_in=document.querySelector("#sign-in")
+    const up_pop=document.querySelector("#up-pop")
+    const popup_esc=document.querySelector("#essc")
+    const in_pop=document.querySelector("#in-pop")
+    const popin_esc=document.querySelector("#escc")
     sign_in.addEventListener("click", signinbtn)
     sign_up.addEventListener("click", signupbtn)
 
@@ -141,13 +141,64 @@ function loginpage(){
     }
 }
 
-
+hompage()
 function hompage() {
-    image_input.addEventListener("change", function() {
+    let user = localStorage.getItem("username");
+    getfeed()
+    let media;
+    document.getElementById("file-input").addEventListener("change", function() {
         const reader = new FileReader();
         reader.addEventListener("load", (evt) => {
-          console.log(evt.target.result);
+             media = evt.target.result
         });
         reader.readAsDataURL(this.files[0]);
-      });
+    });
+    document.getElementById("tweet-btn").addEventListener('click', post)
+    async function post(){
+        let content = document.getElementById("tweetbox").value;
+        const body = new FormData();
+        if(content){
+            body.set('content', content)
+        }
+        if(media){
+            body.set('media_url', media)
+        }
+        body.set('user', user)
+        const response = await fetch('http://localhost/fsw/twitter-project-apis/create_post.php', {
+            method: 'POST',
+            body: body
+        })
+        const data = await response.json()
+        console.log( await data)
+        return data;
+    }
+    async function getfeed() {
+        try {
+            //Creating the FormData to Post
+            const body = new FormData()
+            if(user){
+            body.set('user', user)
+            }
+            else{
+                return "user is undefined";
+            }
+            //Posting
+            const response = await fetch('http://localhost/fsw/twitter-project-apis/get_feed.php', {
+                method: 'POST',
+                body: body
+            });
+            const data = await response.json()
+            console.log(data)
+            //return the response
+            return data; //returns an array of data
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 }
+
+function profilepage() {
+
+}
+
